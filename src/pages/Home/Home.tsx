@@ -5,7 +5,15 @@ import { S } from "./Home";
 const Home = () => {
   return (
     <S.Home>
-      <div>hi</div>
+      <S.BgImg>
+        <S.Logo></S.Logo>
+        <S.RightBox>
+          <S.UpperCatchPhrase></S.UpperCatchPhrase>
+          <S.LowerCatchPhrase></S.LowerCatchPhrase>
+          <S.SignInBtn></S.SignInBtn>
+          <S.SignUpBtn></S.SignUpBtn>
+        </S.RightBox>
+      </S.BgImg>
     </S.Home>
   );
 };
