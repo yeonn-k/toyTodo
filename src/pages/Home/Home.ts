@@ -54,60 +54,6 @@ export const S = {
     height: 70%;
     border-radius: 70px;
 
-    background-color: rgba(256, 256, 256, 0.4);
-  `,
-  CatchPhraseBox: styled.div`
-    margin-top: 80px;
-    margin-bottom: 120px;
-  `,
-  UpperCatchPhrase: styled.div`
-    flex-shrink: 0;
-
-    width: 100%;
-    color: #fff;
-    font-family: Agbalumo;
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 14px;
-  `,
-  LowerCatchPhrase: styled.div`
-    flex-shrink: 0;
-
-    width: 100%;
-    color: #fff;
-    font-family: Agbalumo;
-    text-align: center;
-    font-size: 22px;
-  `,
-  BtnBox: styled.div``,
-  SignBtn: styled.button`
-    display: block;
-    width: 460px;
-    height: 76px;
-    margin-bottom: 18px;
-
-    border-radius: 5px;
-    border: 3px solid #fff;
-
-    font-family: Agbalumo;
-    text-align: center;
-    line-height: 20px;
-    color: #fff;
-    font-size: 22px;
-    outline: none;
-    transition: 0.4s;
-
-    &:hover {
-      border: none;
-      background-color: rgba(256, 256, 256, 0.7);
-      color: #6e7aa2;
-    }
-  `,
-  CheckUser: styled.div`
-    color: #fff;
-
-    &:hover {
-      cursor: pointer;
-    }
+    background-color: ${(props) => props.theme.opacityWhite};
   `,
 };
