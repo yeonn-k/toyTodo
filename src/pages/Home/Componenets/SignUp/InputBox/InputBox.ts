@@ -27,4 +27,7 @@ export const S = {
       outline: none;
     }
   `,
+  Warning: styled.div`
+    width: 100%;
+  `,
 };
