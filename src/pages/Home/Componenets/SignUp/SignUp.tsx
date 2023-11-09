@@ -5,11 +5,41 @@ import Check from "../Check/Check.tsx";
 import CatchPhrase from "../CatchPhrase/CatchPhrase.tsx";
 import InputBox from "./InputBox/InputBox.tsx";
 import { S } from "./SignUp";
-import { create } from "domain";
 
 interface homeProps {
   setSignIn: (value: boolean) => void;
 }
+
+// const [emailErr, setEmailErr] = useState<string>("");
+//   const [passwordErr, setPasswordErr] = useState<string>("");
+
+//   // 이메일 포멧
+//   const emailRegEx =
+//     /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+
+//   // 최소 8 자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자 :
+//   const passwordRegex =
+//     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+
+//   const validateEmail = () => {
+//     if (!emailRegEx.test(inputValue.email)) {
+//       setEmailErr("이메일 양식을 지켜주세요(@를 포함해주세요)");
+//     } else {
+//       setEmailErr("");
+//     }
+//   };
+
+//   const validatePass = () => {
+//     if (!passwordRegex.test(inputValue.password)) {
+//       setPasswordErr("8자 이상으로 숫자, 문자, 특수문자를 사용해 주세요");
+//     } else {
+//       setPasswordErr("");
+//     }
+//   };
+
+//   const errorMessage = [emailErr, passwordErr];
+
+//   console.log(emailErr, passwordErr);
 
 const SignUp = ({ setSignIn }: homeProps) => {
   const [signUpDatas, setSignUpDatas] = useState<
@@ -17,6 +47,7 @@ const SignUp = ({ setSignIn }: homeProps) => {
       id: number;
       title: string;
       placeholder: string;
+      type: string;
     }[]
   >([]);
 
@@ -39,11 +70,8 @@ const SignUp = ({ setSignIn }: homeProps) => {
   );
 
   const createUser = () => {
-    console.log("❓is button alive?");
-
     fetch("https://fakestoreapi.com/users", {
       method: "POST",
-
       body: JSON.stringify({
         email: inputValue.email,
         password: inputValue.password,
@@ -59,19 +87,25 @@ const SignUp = ({ setSignIn }: homeProps) => {
 
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
-  //   const checkForm = () => {
-  //     if (!inputValue.email.includes("@")) {
-  //       return "이메일 양식을 지켜주세요(@를 포함해주세요)";
-  //     }
-  //     if (inputValue.password.length < 9) {
-  //       return "비밀번호는 8 글자 이상으로 작성해주세요";
-  //     }
-  //     if (inputValue.nickname.length < 1) {
-  //       return "닉네임을 작성해주세요";
-  //     } else {
-  //       createUser();
-  //     }
-  //   };
+  const errorMessage = {
+    email: "",
+    password: "",
+  };
+
+  const checkForm = () => {
+    console.log("❓is button alive?");
+
+    if (!inputValue.email || !inputValue.email.includes("@")) {
+      errorMessage.email = "이메일 양식을 지켜주세요(@를 포함해주세요)";
+      console.log(errorMessage);
+    }
+    if (!inputValue.password || inputValue.password.length < 9) {
+      errorMessage.password = "비밀번호는 8 글자 이상으로 작성해주세요";
+      console.log(errorMessage);
+    } else {
+      createUser();
+    }
+  };
 
   return (
     <>
@@ -89,15 +123,17 @@ const SignUp = ({ setSignIn }: homeProps) => {
         <S.ContainInput>
           {signUpDatas.map((signUpData) => (
             <InputBox
-              // key={signUpData.id}
+              key={signUpData.id}
               title={signUpData.title}
               placeholder={signUpData.placeholder}
+              type={signUpData.type}
               inputValue={inputValue}
               setInputValue={setInputValue}
+              errorMessage={errorMessage}
             />
           ))}
         </S.ContainInput>
-        <S.ConfirmBtn onClick={createUser} disabled={checkBtn}>
+        <S.ConfirmBtn onClick={checkForm} disabled={checkBtn}>
           Sign Up !
         </S.ConfirmBtn>
       </S.SignUp>
