@@ -61,11 +61,9 @@ const SignUp = ({ setSignIn }: homeProps) => {
     [key: string]: string;
   }>({});
 
-  console.log("SignUp: ", inputValue);
-
   const checkBtn = !(
-    inputValue.email ||
-    inputValue.password ||
+    inputValue.email &&
+    inputValue.password &&
     inputValue.nickname
   );
 
@@ -87,23 +85,40 @@ const SignUp = ({ setSignIn }: homeProps) => {
 
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
-  const errorMessage = {
-    email: "",
-    password: "",
-  };
+  const [errorMessage, setErrorMessage] = useState<{
+    email: string;
+    password: string;
+    nickname: string;
+  }>({ email: "", password: "", nickname: "" });
 
   const checkForm = () => {
     console.log("❓is button alive?");
 
     if (!inputValue.email || !inputValue.email.includes("@")) {
-      errorMessage.email = "이메일 양식을 지켜주세요(@를 포함해주세요)";
-      console.log(errorMessage);
+      setErrorMessage((prev) => ({
+        ...prev,
+        email: "이메일 양식을 지켜주세요(@를 포함해주세요)",
+      }));
+    } else if (inputValue && inputValue.email.includes("@")) {
+      setErrorMessage((prev) => ({ ...prev, email: "" }));
     }
+
     if (!inputValue.password || inputValue.password.length < 9) {
-      errorMessage.password = "비밀번호는 8 글자 이상으로 작성해주세요";
-      console.log(errorMessage);
-    } else {
-      createUser();
+      setErrorMessage((prev) => ({
+        ...prev,
+        password: "비밀번호를 8자 이상으로 작성해주세요",
+      }));
+    } else if (inputValue && inputValue.password.length > 7) {
+      setErrorMessage((prev) => ({ ...prev, password: "" }));
+    }
+
+    if (!inputValue.nickname) {
+      setErrorMessage((prev) => ({
+        ...prev,
+        nickname: "닉네임을 입력해주세요",
+      }));
+    } else if (inputValue.nickname) {
+      setErrorMessage((prev) => ({ ...prev, nickname: "" }));
     }
   };
 
@@ -124,6 +139,7 @@ const SignUp = ({ setSignIn }: homeProps) => {
           {signUpDatas.map((signUpData) => (
             <InputBox
               key={signUpData.id}
+              id={signUpData.id}
               title={signUpData.title}
               placeholder={signUpData.placeholder}
               type={signUpData.type}
