@@ -50,8 +50,10 @@ export const S = {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+
     width: 560px;
     height: 70%;
+    margin-right: 30px;
     border-radius: 70px;
 
     background-color: ${(props) => props.theme.opacityWhite};

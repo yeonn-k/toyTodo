@@ -35,6 +35,10 @@ export const S = {
     height: 20px;
     background: url(/images/icon/close.png) no-repeat;
     background-size: cover;
+
+    &:hover {
+      cursor: pointer;
+    }
   `,
   Line: styled.div`
     margin-top: 76px;
@@ -56,5 +60,9 @@ export const S = {
     background-color: ${(props) => props.theme.blueViolet};
     opacity: 0.7;
     color: #fff;
+
+    &:hover {
+      opacity: 0.6;
+    }
   `,
 };

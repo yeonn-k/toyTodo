@@ -1,17 +1,20 @@
 [
   {
     "id": 1,
-    "title": "e-mail",
-    "placeholder": "e-mail을 입력해주세요"
+    "title": "email",
+    "placeholder": "e-mail을 입력해주세요",
+    "type": "text"
   },
   {
     "id": 2,
     "title": "password",
-    "placeholder": "비밀번호를 입력해주세요"
+    "placeholder": "비밀번호를 입력해주세요",
+    "type": "password"
   },
   {
-    "id": 1,
-    "title": "닉네임",
-    "placeholder": "사용할 닉네임을 입력해주세요"
+    "id": 3,
+    "title": "nickname",
+    "placeholder": "사용할 닉네임을 입력해주세요",
+    "type": "text"
   }
 ]
