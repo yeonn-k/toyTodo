@@ -13,8 +13,8 @@
   },
   {
     "id": 3,
-    "title": "닉네임",
-    "placeholder": "사용할 닉네임을 입력해주세요(선택사항)",
+    "title": "nickname",
+    "placeholder": "사용할 닉네임을 입력해주세요",
     "type": "text"
   }
 ]

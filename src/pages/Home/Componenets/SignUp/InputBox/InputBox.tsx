@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { S } from "./InputBox";
 
 interface signUpProps {
-  key: number;
+  id: number;
   title: string;
   placeholder: string;
   type: string;
@@ -13,7 +13,7 @@ interface signUpProps {
 }
 
 const InputBox = ({
-  key,
+  id,
   title,
   placeholder,
   type,
@@ -27,8 +27,6 @@ const InputBox = ({
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  console.log(errorMessage[type]);
-
   return (
     <S.InputBox>
       <S.Title>{title}</S.Title>
@@ -38,7 +36,7 @@ const InputBox = ({
         type={type}
         onChange={handleInput}
       ></S.Input>
-      <S.Warning>{errorMessage[type]}</S.Warning>
+      <S.Warning>{errorMessage[title]}</S.Warning>
     </S.InputBox>
   );
 };
