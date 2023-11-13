@@ -5,6 +5,8 @@ import Check from "../Check/Check.tsx";
 import CatchPhrase from "../CatchPhrase/CatchPhrase.tsx";
 import InputBox from "./InputBox/InputBox.tsx";
 import { S } from "./SignUp";
+import { create } from "domain";
+import { error } from "console";
 
 interface homeProps {
   setSignIn: (value: boolean) => void;
@@ -68,59 +70,28 @@ const SignUp = ({ setSignIn }: homeProps) => {
   );
 
   const createUser = () => {
-    fetch("https://fakestoreapi.com/users", {
-      method: "POST",
-      body: JSON.stringify({
-        email: inputValue.email,
-        password: inputValue.password,
-        nickname: inputValue.nickname,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("🌼 fetch is done!", result),
-          setConfirmModal((prev: boolean) => !prev);
-      });
+    if (errorCheck === true) {
+      fetch("https://fakestoreapi.com/users", {
+        method: "POST",
+        body: JSON.stringify({
+          email: inputValue.email,
+          password: inputValue.password,
+          nickname: inputValue.nickname,
+        }),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log("🌼 fetch is done!", result),
+            setConfirmModal((prev: boolean) => !prev);
+        });
+    }
   };
 
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
-  const [errorMessage, setErrorMessage] = useState<{
-    email: string;
-    password: string;
-    nickname: string;
-  }>({ email: "", password: "", nickname: "" });
+  const [errorCheck, setErrorCheck] = useState<boolean>(false);
 
-  const checkForm = () => {
-    console.log("❓is button alive?");
-
-    if (!inputValue.email || !inputValue.email.includes("@")) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        email: "이메일 양식을 지켜주세요(@를 포함해주세요)",
-      }));
-    } else if (inputValue && inputValue.email.includes("@")) {
-      setErrorMessage((prev) => ({ ...prev, email: "" }));
-    }
-
-    if (!inputValue.password || inputValue.password.length < 9) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        password: "비밀번호를 8자 이상으로 작성해주세요",
-      }));
-    } else if (inputValue && inputValue.password.length > 7) {
-      setErrorMessage((prev) => ({ ...prev, password: "" }));
-    }
-
-    if (!inputValue.nickname) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        nickname: "닉네임을 입력해주세요",
-      }));
-    } else if (inputValue.nickname) {
-      setErrorMessage((prev) => ({ ...prev, nickname: "" }));
-    }
-  };
+  console.log(errorCheck);
 
   return (
     <>
@@ -145,11 +116,12 @@ const SignUp = ({ setSignIn }: homeProps) => {
               type={signUpData.type}
               inputValue={inputValue}
               setInputValue={setInputValue}
-              errorMessage={errorMessage}
+              errorCheck={errorCheck}
+              setErrorCheck={setErrorCheck}
             />
           ))}
         </S.ContainInput>
-        <S.ConfirmBtn onClick={checkForm} disabled={checkBtn}>
+        <S.ConfirmBtn onClick={createUser} disabled={checkBtn}>
           Sign Up !
         </S.ConfirmBtn>
       </S.SignUp>
