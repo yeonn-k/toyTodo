@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 import SignIn from "./Componenets/SignIn/SignIn.tsx";
 import SignUp from "./Componenets/SignUp/SignUp.tsx";
-import Check from "./Componenets/Check/Check.tsx";
 
 import { S } from "./Home";
 
 const Home = () => {
-  const signUp = () => {};
+  const [signIn, setSignIn] = useState(true);
+
   return (
     <S.Home>
       <S.BgImg>
-        {/* <Check /> */}
         <S.LogoBox>
           <S.CenterBox>
             <S.Logo>Todo</S.Logo>
@@ -19,7 +18,11 @@ const Home = () => {
           </S.CenterBox>
         </S.LogoBox>
         <S.RightBox>
-          <SignIn />
+          {signIn ? (
+            <SignIn setSignIn={setSignIn} />
+          ) : (
+            <SignUp setSignIn={setSignIn} />
+          )}
         </S.RightBox>
       </S.BgImg>
     </S.Home>

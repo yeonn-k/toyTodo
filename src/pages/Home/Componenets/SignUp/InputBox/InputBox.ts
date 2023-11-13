@@ -27,4 +27,10 @@ export const S = {
       outline: none;
     }
   `,
+  Warning: styled.div`
+    width: 100%;
+    margin-top: 8px;
+    color: #fff;
+    font-size: 14px;
+  `,
 };
