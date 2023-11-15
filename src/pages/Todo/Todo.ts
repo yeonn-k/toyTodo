@@ -71,7 +71,7 @@ export const S = {
 
     background-color: rgba(0, 0, 0, 0.5);
   `,
-  CalanderBox: styled.div`
+  CalendarBox: styled.div`
     position: absolute;
     bottom: 0;
     width: 100%;
