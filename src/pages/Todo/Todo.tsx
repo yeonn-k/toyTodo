@@ -14,7 +14,7 @@ const Todo = () => {
           <S.ExceptCatchPhrase>
             <S.LeftBox>
               <S.WheaterBox></S.WheaterBox>
-              <S.CalanderBox></S.CalanderBox>
+              <S.CalendarBox></S.CalendarBox>
             </S.LeftBox>
             <S.RightBox>
               <S.ATodo></S.ATodo>
