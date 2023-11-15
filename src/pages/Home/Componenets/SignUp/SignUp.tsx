@@ -91,8 +91,6 @@ const SignUp = ({ setSignIn }: homeProps) => {
 
   const [errorCheck, setErrorCheck] = useState<boolean>(false);
 
-  console.log(errorCheck);
-
   return (
     <>
       {confirmModal ? (
