@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import SignIn from "./Componenets/SignIn/SignIn.tsx";
-import SignUp from "./Componenets/SignUp/SignUp.tsx";
+import SignIn from "./Components/SignIn/SignIn.tsx";
+import SignUp from "./Components/SignUp/SignUp.tsx";
 
 import { S } from "./Home";
 
