@@ -5,7 +5,13 @@ import { S } from "./Weather";
 const Weather = () => {
   return (
     <S.Weather>
-      <div></div>
+      <S.DateBox>Today ? </S.DateBox>
+      <S.WeatherIcon />
+      <S.TemperatureBox>
+        Temperature
+        <S.Maximum>Max: °C</S.Maximum>
+        <S.Minimum>Min: °C</S.Minimum>
+      </S.TemperatureBox>
     </S.Weather>
   );
 };
