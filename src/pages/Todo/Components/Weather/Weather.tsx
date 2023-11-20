@@ -35,7 +35,6 @@ const Weather = () => {
   let currentTime = `${currentHour}${makeMin(currentMin)}`;
 
   let getBaseTime: string = "";
-  console.log("currentTime: ", currentTime);
 
   const timeInform = (currentTime: string) => {
     const timeArr = [
@@ -81,10 +80,6 @@ const Weather = () => {
   const nx = 37;
   const ny = 126;
 
-  console.log(checkDate());
-  console.log(baseDate);
-  console.log(baseTime);
-
   // const region = [
   //   { name: "서울", nx: 60, ny: 127 },
   //   { name: "인천", nx: 55, ny: 124 },
@@ -111,8 +106,6 @@ const Weather = () => {
       .then((response) => response.json())
       .then((result) => setWeather(result.response.body.items.item));
   }, []);
-
-  console.log(weather);
 
   const weatherCategory = (weather: [{ [key: string]: string }]) => {
     if (weather) {
@@ -176,12 +169,6 @@ const Weather = () => {
   useEffect(() => {
     weatherIcon(sky, pty);
   }, [weatherCategory]);
-
-  console.log("sky: ", sky);
-  console.log("pop: ", pop);
-  console.log("pty: ", pty);
-  console.log("tmp: ", tmp);
-  console.log("icon:", icon);
 
   if (!icon) return null;
   return (
