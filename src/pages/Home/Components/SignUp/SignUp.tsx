@@ -5,8 +5,6 @@ import Check from "../Check/Check.tsx";
 import CatchPhrase from "../CatchPhrase/CatchPhrase.tsx";
 import InputBox from "./InputBox/InputBox.tsx";
 import { S } from "./SignUp";
-import { create } from "domain";
-import { error } from "console";
 
 interface homeProps {
   setSignIn: (value: boolean) => void;
