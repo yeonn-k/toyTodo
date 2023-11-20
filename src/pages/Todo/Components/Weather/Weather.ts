@@ -19,9 +19,10 @@ export const S = {
     font-family: Agbalumo;
     font-size: 30px;
   `,
-  WeatherIcon: styled.div`
+  WeatherIcon: styled.div<{ icon: string }>`
     width: 100px;
     height: 100px;
+    background: url(${(props) => props.icon});
   `,
   TemperatureBox: styled.div`
     display: flex;

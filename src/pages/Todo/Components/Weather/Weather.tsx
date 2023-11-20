@@ -141,26 +141,32 @@ const Weather = () => {
     if (pty === "0") {
       if (sky === "1") {
         // 맑음
-        setIcon('<i class="wu wu-64 wu-white wu-day wu-clear"></i>');
+        setIcon("/images/icon/weather/clear.svg");
       }
       if (sky === "3") {
         // 구름많음
+        setIcon("images/icon/weather/cloudy.svg");
       }
       if (sky === "4") {
         // 흐림
+        setIcon("images/icon/weather/partly-cloudy.svg");
       }
     }
     if (pty === "1") {
       // 비
+      setIcon("images/icon/weather/night-rain.svg");
     }
     if (pty === "2") {
       // 비/눈
+      setIcon("images/icon/weather/flurries.svg");
     }
     if (pty === "3") {
       // 눈
+      setIcon("images/icon/weather/change-snow.svg");
     }
     if (pty === "4") {
       // 소나기
+      setIcon("images/icon/weather/chage-rain.svg");
     }
   };
 
@@ -177,10 +183,11 @@ const Weather = () => {
   console.log("tmp: ", tmp);
   console.log("icon:", icon);
 
+  if (!icon) return null;
   return (
     <S.Weather>
       <S.DateBox>Today ? </S.DateBox>
-      <S.WeatherIcon />
+      <S.WeatherIcon icon={icon} />
       <S.TemperatureBox>
         <S.Maximum>Temp. {tmp}°C</S.Maximum>
         <S.Minimum>rain {pop}%</S.Minimum>
