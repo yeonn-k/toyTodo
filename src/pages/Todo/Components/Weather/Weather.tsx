@@ -1,8 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { S } from "./Weather";
 
 const Weather = () => {
+  const [weather, setWeather] = useState<[{ [key: string]: string }]>();
+
+  const [sky, setSky] = useState<string>(); // 하늘상태
+  const [pty, setPty] = useState<string>(); // 강수형태
+  const [pop, setPop] = useState<string>(); // 강수확률
+  const [tmp, setTmp] = useState<string>(); // 1시간 기온
+  const [icon, setIcon] = useState<string>(); // weather icon
+
   const today = new Date();
   const year = today.getFullYear();
   const date = today.getDate();
@@ -64,7 +72,7 @@ const Weather = () => {
 
   const todayInform = `${year}${month(currentMonth)}${checkDate()}`;
 
-  const numOfRows = 1;
+  const numOfRows = 14;
   const pageNo = 1;
   const dataType = "json";
   const baseDate = todayInform;
@@ -73,7 +81,9 @@ const Weather = () => {
   const nx = 37;
   const ny = 126;
 
-  console.log("baseTime: ", baseTime);
+  console.log(checkDate());
+  console.log(baseDate);
+  console.log(baseTime);
 
   // const region = [
   //   { name: "서울", nx: 60, ny: 127 },
@@ -89,66 +99,91 @@ const Weather = () => {
   //   { name: "제주도", nx: 52, ny: 38 },
   // ];
 
-  const xhr = new XMLHttpRequest();
-
   const apiUrl =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
   const serviceKey =
     "WVXbHaU1Swo%2BcYdMpg2hDAaLjs3Vehe3CBCsgOR63iQf%2FWqVv%2BeuKKq%2Bs8uOhS4%2B1bwL4VwhxS1%2F0WUOgmklag%3D%3D";
 
-  let queryParams =
-    "?" + encodeURIComponent("serviceKey") + "=" + `${serviceKey}`;
-  queryParams +=
-    "&" + encodeURIComponent("pageNo") + "=" + encodeURIComponent(`${pageNo}`);
-  queryParams +=
-    "&" +
-    encodeURIComponent("numOfRows") +
-    "=" +
-    encodeURIComponent(`${numOfRows}`);
-  queryParams +=
-    "&" +
-    encodeURIComponent("dataType") +
-    "=" +
-    encodeURIComponent(`${dataType}`);
-  queryParams +=
-    "&" +
-    encodeURIComponent("base_date") +
-    "=" +
-    encodeURIComponent(`${baseDate}`);
-  queryParams +=
-    "&" +
-    encodeURIComponent("base_time") +
-    "=" +
-    encodeURIComponent(`${baseTime}`);
-  queryParams +=
-    "&" + encodeURIComponent("nx") + "=" + encodeURIComponent(`${nx}`);
-  queryParams +=
-    "&" + encodeURIComponent("ny") + "=" + encodeURIComponent(`${ny}`);
+  useEffect(() => {
+    fetch(
+      `${apiUrl}?serviceKey=${serviceKey}&pageNo=${pageNo}&numOfRows=${numOfRows}&dataType=${dataType}&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}`
+    )
+      .then((response) => response.json())
+      .then((result) => setWeather(result.response.body.items.item));
+  }, []);
 
-  xhr.open("GET", apiUrl + queryParams);
-  xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-      console.log(
-        "Status: " +
-          this.status +
-          "nHeaders:" +
-          JSON.stringify(this.getAllResponseHeaders()) +
-          "nBody: " +
-          this.responseText
-      );
+  console.log(weather);
+
+  const weatherCategory = (weather: [{ [key: string]: string }]) => {
+    if (weather) {
+      for (let i = 0; i < weather.length; i++) {
+        // 하늘상태 (맑음(1), 구름많음(3), 흐림(4))
+        if (weather && Object.values(weather[i]).includes("SKY")) {
+          setSky(weather[i]["fcstValue"]);
+        }
+        // 강수형태 (없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4))
+        if (weather && Object.values(weather[i]).includes("PTY")) {
+          setPty(weather[i]["fcstValue"]);
+        }
+        // 강수확률 %
+        if (weather && Object.values(weather[i]).includes("POP")) {
+          setPop(weather[i]["fcstValue"]);
+        }
+        // 1시간 기온
+        if (weather && Object.values(weather[i]).includes("TMP")) {
+          setTmp(weather[i]["fcstValue"]);
+        }
+      }
     }
   };
 
-  xhr.send("");
+  const weatherIcon = (sky: string, pty: string) => {
+    if (pty === "0") {
+      if (sky === "1") {
+        // 맑음
+        setIcon('<i class="wu wu-64 wu-white wu-day wu-clear"></i>');
+      }
+      if (sky === "3") {
+        // 구름많음
+      }
+      if (sky === "4") {
+        // 흐림
+      }
+    }
+    if (pty === "1") {
+      // 비
+    }
+    if (pty === "2") {
+      // 비/눈
+    }
+    if (pty === "3") {
+      // 눈
+    }
+    if (pty === "4") {
+      // 소나기
+    }
+  };
+
+  useEffect(() => {
+    weatherCategory(weather);
+  }, [weather]);
+  useEffect(() => {
+    weatherIcon(sky, pty);
+  }, [weatherCategory]);
+
+  console.log("sky: ", sky);
+  console.log("pop: ", pop);
+  console.log("pty: ", pty);
+  console.log("tmp: ", tmp);
+  console.log("icon:", icon);
 
   return (
     <S.Weather>
       <S.DateBox>Today ? </S.DateBox>
       <S.WeatherIcon />
       <S.TemperatureBox>
-        Temperature
-        <S.Maximum>Max: °C</S.Maximum>
-        <S.Minimum>Min: °C</S.Minimum>
+        <S.Maximum>Temp. {tmp}°C</S.Maximum>
+        <S.Minimum>rain {pop}%</S.Minimum>
       </S.TemperatureBox>
     </S.Weather>
   );
