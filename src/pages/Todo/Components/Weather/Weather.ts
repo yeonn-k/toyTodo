@@ -22,7 +22,6 @@ export const S = {
   WeatherIcon: styled.div`
     width: 100px;
     height: 100px;
-    background-color: aliceblue;
   `,
   TemperatureBox: styled.div`
     display: flex;
