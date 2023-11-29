@@ -22,7 +22,7 @@ export const S = {
   WeatherIcon: styled.div<{ icon: string }>`
     width: 100px;
     height: 100px;
-    background: url(${(props) => props.icon});
+    background: url(${(props) => props.icon}) no-repeat;
   `,
   TemperatureBox: styled.div`
     display: flex;
