@@ -2,10 +2,15 @@ import React from "react";
 
 import { S } from "./ATodo";
 
-const ATodo = () => {
+interface TodoBoxProps {
+  key: string;
+  todo: string;
+}
+const ATodo = ({ todo }: TodoBoxProps) => {
   return (
     <S.ATodo>
-      <div></div>
+      <S.CheckBox type="checkbox" />
+      {todo}
     </S.ATodo>
   );
 };

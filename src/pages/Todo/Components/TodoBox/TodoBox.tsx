@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
 
 const TodoBox = () => {
@@ -36,21 +37,24 @@ const TodoBox = () => {
     });
   };
 
+  const numOfTodos = todos.length;
+
   if (!todos) return null;
 
   return (
     <S.TodoBox>
       <S.UpperBox>
-        <S.NumOfTask>Number of Tasks</S.NumOfTask>
+        <S.NumOfTask>
+          Number of Tasks <S.Num>{numOfTodos}</S.Num>
+        </S.NumOfTask>
         <S.MemoBox>
           {/* <S.MemoTitle>Memo for Today? </S.MemoTitle> */}
-          엄마생신 ! 🍰
         </S.MemoBox>
       </S.UpperBox>
       <S.Line />
       <S.Tasks>
         {todos.map((todo) => {
-          return <S.Todo key={todo}>{todo}</S.Todo>;
+          return <ATodo key={todo} todo={todo} />;
         })}
       </S.Tasks>
 
