@@ -2,7 +2,7 @@ import React from "react";
 
 import Weather from "./Components/Weather/Weather.tsx";
 import Calander from "./Components/Calendar/Calendar.tsx";
-import ATodo from "./Components/ATodo/ATodo.tsx";
+import TodoBox from "./Components/TodoBox/TodoBox.tsx";
 
 import { S } from "./Todo";
 
@@ -25,7 +25,7 @@ const Todo = () => {
               </S.CalendarBox>
             </S.LeftBox>
             <S.RightBox>
-              <S.ATodo></S.ATodo>
+              <TodoBox />
             </S.RightBox>
           </S.ExceptCatchPhrase>
         </S.Brightness>

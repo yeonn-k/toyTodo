@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const S = {
   TodoBox: styled.div`
+    position: relative;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    align-content: flex-start;
 
     width: 100%;
     height: 100%;
@@ -17,8 +19,7 @@ export const S = {
     width: 100%;
     height: 130px;
     padding: 38px;
-
-    border: solid 1px aliceblue;
+    margin-top: 24px;
   `,
   NumOfTask: styled.span`
     font-family: ${(props) => props.theme.titleFont};
@@ -38,17 +39,60 @@ export const S = {
     font-family: ${(props) => props.theme.titleFont};
     font-weight: 100;
   `,
+  Line: styled.div`
+    width: 90%;
+    height: 1px;
+    background-color: #fff;
+  `,
   Tasks: styled.ul`
     width: 100%;
+    padding: 50px;
+    margin-top: -10px;
 
     color: #fff;
     font-size: 22px;
   `,
-  TaskInput: styled.input``,
+  Todo: styled.div`
+    width: 100%;
+    margin-bottom: 10px;
+  `,
+  Form: styled.form`
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  `,
+  TaskInput: styled.input`
+    width: 70%;
+    margin-right: 14px;
+    padding: 10px;
+
+    border-radius: 5px;
+    border: none;
+
+    font-size: 16px;
+  `,
   Test: styled.button`
+    display: block;
+    width: 156px;
+    height: 52px;
+
+    border-radius: 5px;
+    border: 3px solid #fff;
+
+    font-family: Agbalumo;
+    text-align: center;
+    line-height: 20px;
     color: #fff;
-    width: 100px;
-    height: 100px;
-    background-color: blue;
+    font-size: 22px;
+    outline: none;
+    transition: 0.4s;
+
+    &:hover {
+      border: none;
+      background-color: rgba(256, 256, 256, 0.7);
+      color: ${(props) => props.theme.blueViolet};
+    }
   `,
 };

@@ -64,7 +64,11 @@ const Weather = () => {
   };
 
   const checkDate = () => {
-    if (getBaseTime === "2300") {
+    if (
+      getBaseTime === "2300" &&
+      0 < parseInt(getBaseTime) &&
+      parseInt(getBaseTime) < 210
+    ) {
       return date - 1;
     } else return date;
   };
