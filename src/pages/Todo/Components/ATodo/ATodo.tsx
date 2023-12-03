@@ -3,14 +3,20 @@ import React from "react";
 import { S } from "./ATodo";
 
 interface TodoBoxProps {
-  key: string;
-  todo: string;
+  id: number;
+  taskName: string;
+  state: boolean;
+  date: string;
+  backlog: string;
 }
+
 const ATodo = ({ todo }: TodoBoxProps) => {
+  const { id, taskName, state, date, backlog } = todo;
+
   return (
     <S.ATodo>
       <S.CheckBox type="checkbox" />
-      {todo}
+      {taskName}
     </S.ATodo>
   );
 };
