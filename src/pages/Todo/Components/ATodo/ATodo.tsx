@@ -16,14 +16,9 @@ interface TodoBoxProps {
 const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
   const { id, taskName, state, date, backlog } = todo;
 
+  console.log(todo);
+
   const [checked, setChecked] = useState(false);
-  const [changeTodo, setChangeTodo] = useState<{
-    id: number;
-    taskName: string;
-    state: boolean;
-    date: string;
-    backlog: string;
-  }>();
 
   const isChecked = () => {
     setChecked((prev) => !prev);
@@ -31,10 +26,7 @@ const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
   };
 
   const changeState = () => {
-    setChangeTodo((prev) => ({
-      ...prev,
-      state: !prev.state,
-    }));
+    todo.state = !todo.state;
   };
 
   const putState = async ({ todo }: TodoBoxProps) => {
@@ -44,7 +36,7 @@ const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify({ todo: changeTodo }),
+        body: JSON.stringify({ todo: todo }),
       });
 
       const response = await fetch("/todos");
@@ -56,8 +48,8 @@ const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
   };
 
   return (
-    <S.ATodo>
-      <S.CheckBox type="checkbox" onClick={isChecked} />
+    <S.ATodo style={{ textDecoration: checked ? "line-through" : "none" }}>
+      <S.CheckBox type="checkbox" checked={checked} onChange={isChecked} />
       {taskName}
     </S.ATodo>
   );
