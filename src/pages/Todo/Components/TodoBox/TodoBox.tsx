@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
-import { create } from "domain";
 
 const TodoBox = () => {
   const [taskName, setTaskName] = useState("");
@@ -72,7 +71,6 @@ const TodoBox = () => {
 
     postTodo(newTodo);
   };
-  console.log("global todo: ", todo);
 
   useEffect(() => {
     fetch("/todos")
@@ -91,7 +89,6 @@ const TodoBox = () => {
     backlog: string;
   }) => {
     setLoading(true);
-    console.log("post todo: ", todo);
 
     try {
       await fetch("/todos", {
@@ -113,6 +110,7 @@ const TodoBox = () => {
         date: "",
         backlog: "",
       });
+      setTaskName("");
     } catch (error) {
       console.error("error during post new todo❌:", error);
     } finally {
@@ -137,7 +135,7 @@ const TodoBox = () => {
       <S.Line />
       <S.Tasks>
         {todos.map((todo) => {
-          return <ATodo key={todo.id} todo={todo} />;
+          return <ATodo key={todo.id} todo={todo} setTodo={setTodo} />;
         })}
       </S.Tasks>
 

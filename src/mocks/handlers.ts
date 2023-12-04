@@ -43,15 +43,11 @@ export const handlers = [
   }),
 
   http.post<PostTodo>("/todos", async ({ request }) => {
-    console.log(request);
     const requestContents = await request.json();
 
-    console.log(requestContents);
     const todo = requestContents?.todo;
-    console.log(todo);
 
     if (todo) {
-      console.log("postMSW: ", todo);
       todos.push(todo);
     } else {
       console.error("Todo is undefined or null.");
