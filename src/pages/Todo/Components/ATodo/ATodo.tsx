@@ -10,13 +10,12 @@ interface TodoBoxProps {
     date: string;
     backlog: string;
   };
-  setTodo: (value: object) => void;
+  setTodo: (value: {}) => void;
+  setTodos: (value: []) => void;
 }
 
-const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
+const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
   const { id, taskName, state, date, backlog } = todo;
-
-  console.log(todo);
 
   const [checked, setChecked] = useState(false);
 
@@ -27,9 +26,11 @@ const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
 
   const changeState = () => {
     todo.state = !todo.state;
+
+    putState();
   };
 
-  const putState = async ({ todo }: TodoBoxProps) => {
+  const putState = async () => {
     try {
       await fetch("/todos", {
         method: "PUT",
@@ -39,8 +40,7 @@ const ATodo = ({ todo, setTodo }: TodoBoxProps) => {
         body: JSON.stringify({ todo: todo }),
       });
 
-      const response = await fetch("/todos");
-      const result = await response.json();
+      setTodos();
     } catch (error) {
       console.error("error during put state❌:", error);
     } finally {

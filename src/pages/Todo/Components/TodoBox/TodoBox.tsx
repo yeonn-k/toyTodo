@@ -81,6 +81,8 @@ const TodoBox = () => {
       });
   }, []);
 
+  console.log(todos);
+
   const postTodo = async (newTodo: {
     id: number;
     taskName: string;
@@ -118,7 +120,7 @@ const TodoBox = () => {
     }
   };
 
-  const numOfTodos = todos.length;
+  let numOfTodos = todos.filter((el) => el.state === false).length;
 
   if (!todos) return null;
 
@@ -135,7 +137,14 @@ const TodoBox = () => {
       <S.Line />
       <S.Tasks>
         {todos.map((todo) => {
-          return <ATodo key={todo.id} todo={todo} setTodo={setTodo} />;
+          return (
+            <ATodo
+              key={todo.id}
+              todo={todo}
+              setTodo={setTodo}
+              setTodos={setTodos}
+            />
+          );
         })}
       </S.Tasks>
 

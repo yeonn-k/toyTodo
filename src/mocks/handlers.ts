@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw";
+import { server } from "./server";
 
 // const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
 const todos = [
@@ -52,5 +53,15 @@ export const handlers = [
     } else {
       console.error("Todo is undefined or null.");
     }
+
+    return new HttpResponse(todo, { status: 201 });
+  }),
+
+  http.put<PostTodo>("/todos", async ({ request }) => {
+    const requestContents = await request.json();
+
+    const todo = requestContents?.todo;
+
+    todos.filter((el) => el.id != todo);
   }),
 ];
