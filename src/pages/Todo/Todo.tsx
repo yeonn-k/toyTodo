@@ -17,9 +17,7 @@ const Todo = () => {
           </S.CatchPhraseBox>
           <S.ExceptCatchPhrase>
             <S.LeftBox>
-              <S.WheaterBox>
-                <Weather />
-              </S.WheaterBox>
+              <S.WheaterBox>{/* <Weather /> */}</S.WheaterBox>
               <S.CalendarBox>
                 <Calander />
               </S.CalendarBox>

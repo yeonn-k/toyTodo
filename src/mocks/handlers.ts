@@ -1,9 +1,39 @@
 import { http, HttpResponse } from "msw";
+import { server } from "./server";
 
-const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
+// const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
+const todos = [
+  {
+    id: 0,
+    taskName: "wake up 🛏️",
+    state: false,
+    date: "20231201",
+    backlog: "",
+  },
+  {
+    id: 1,
+    taskName: "do tasks 🖍️",
+    state: false,
+    date: "20231201",
+    backlog: "",
+  },
+  {
+    id: 2,
+    taskName: "have meals 🥯",
+    state: false,
+    date: "20231201",
+    backlog: "",
+  },
+];
 
 interface PostTodo {
-  todo: string;
+  todo: {
+    id: number;
+    taskName: string;
+    state: boolean;
+    date: string;
+    backlog: string;
+  };
 }
 
 export const handlers = [
@@ -15,9 +45,23 @@ export const handlers = [
 
   http.post<PostTodo>("/todos", async ({ request }) => {
     const requestContents = await request.json();
-    const newTodo = requestContents.todo;
-    console.log(newTodo);
 
-    todos.push(newTodo);
+    const todo = requestContents?.todo;
+
+    if (todo) {
+      todos.push(todo);
+    } else {
+      console.error("Todo is undefined or null.");
+    }
+
+    return new HttpResponse(todo, { status: 201 });
+  }),
+
+  http.put<PostTodo>("/todos", async ({ request }) => {
+    const requestContents = await request.json();
+
+    const todo = requestContents?.todo;
+
+    todos.filter((el) => el.id != todo);
   }),
 ];

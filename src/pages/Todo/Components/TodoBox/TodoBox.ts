@@ -22,10 +22,16 @@ export const S = {
     margin-top: 24px;
   `,
   NumOfTask: styled.span`
+    display: flex;
     font-family: ${(props) => props.theme.titleFont};
     font-size: 26px;
     line-height: 26px;
     color: #fff;
+  `,
+  Num: styled.span`
+    margin-left: 14px;
+    font-size: 40px;
+    color: ${(props) => props.theme.blueViolet};
   `,
   MemoBox: styled.div`
     width: 100%;

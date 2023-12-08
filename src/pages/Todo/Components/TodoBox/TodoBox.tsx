@@ -1,11 +1,77 @@
 import React, { useEffect, useState } from "react";
 
+import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
 
 const TodoBox = () => {
-  const [todo, setTodo] = useState<string>("");
-  const [todos, setTodos] = useState<string[]>([]);
+  const [taskName, setTaskName] = useState("");
+
+  const [todo, setTodo] = useState<{
+    id: number;
+    taskName: string;
+    state: boolean;
+    date: string;
+    backlog: string;
+  }>();
+
+  const [todos, setTodos] = useState<
+    Array<{
+      id: number;
+      taskName: string;
+      state: boolean;
+      date: string;
+      backlog: string;
+    }>
+  >([]);
+
   const [loading, setLoading] = useState<boolean>(false);
+
+  let ref = 3;
+
+  let dateForm = "";
+
+  const createDate = () => {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+
+    const makeMonthForm = (month: number) => {
+      if (month < 10) {
+        return "0" + month;
+      }
+      return month;
+    };
+    const makeDateForm = (date: number) => {
+      if (date < 10) {
+        return "0" + date;
+      }
+    };
+
+    dateForm = `${year}${makeMonthForm(month)}${makeDateForm(date)}`;
+  };
+
+  createDate();
+
+  const createTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    ref++;
+
+    const newTodo = {
+      id: ref,
+      taskName: taskName,
+      state: false,
+      date: dateForm,
+      backlog: "",
+    };
+
+    setTodo(newTodo);
+
+    postTodo(newTodo);
+  };
+
   useEffect(() => {
     fetch("/todos")
       .then((response) => response.json())
@@ -15,56 +81,86 @@ const TodoBox = () => {
       });
   }, []);
 
-  const postTodos = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  console.log(todos);
+
+  const postTodo = async (newTodo: {
+    id: number;
+    taskName: string;
+    state: boolean;
+    date: string;
+    backlog: string;
+  }) => {
     setLoading(true);
-    fetch("/todos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({ todo }),
-    }).then(() => {
-      fetch("/todos")
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          setTodo("");
-          setTodos(result);
-          setLoading(false);
-        });
-    });
+
+    try {
+      await fetch("/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({ todo: newTodo }),
+      });
+
+      const response = await fetch("/todos");
+      const result = await response.json();
+
+      setTodos(result);
+      setTodo({
+        id: ref,
+        taskName: "",
+        state: false,
+        date: "",
+        backlog: "",
+      });
+      setTaskName("");
+    } catch (error) {
+      console.error("error during post new todo❌:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  let numOfTodos = todos.filter((el) => el.state === false).length;
 
   if (!todos) return null;
 
   return (
     <S.TodoBox>
       <S.UpperBox>
-        <S.NumOfTask>Number of Tasks</S.NumOfTask>
+        <S.NumOfTask>
+          Number of Tasks <S.Num>{numOfTodos}</S.Num>
+        </S.NumOfTask>
         <S.MemoBox>
           {/* <S.MemoTitle>Memo for Today? </S.MemoTitle> */}
-          엄마생신 ! 🍰
         </S.MemoBox>
       </S.UpperBox>
       <S.Line />
       <S.Tasks>
         {todos.map((todo) => {
-          return <S.Todo key={todo}>{todo}</S.Todo>;
+          return (
+            <ATodo
+              key={todo.id}
+              todo={todo}
+              setTodo={setTodo}
+              setTodos={setTodos}
+            />
+          );
         })}
       </S.Tasks>
 
-      <S.Form onSubmit={postTodos}>
+      <S.Form onSubmit={createTodo}>
         <S.TaskInput
           type="text"
           name="todo"
           placeholder="new task! ✨"
           disabled={loading}
-          value={todo}
-          onChange={({ target: { value } }) => setTodo(value)}
+          value={taskName}
+          onChange={({ target: { value } }) => {
+            setTaskName(value);
+          }}
         />
 
-        <S.Test disabled={!todo}>add</S.Test>
+        <S.Test disabled={!taskName}>add</S.Test>
       </S.Form>
     </S.TodoBox>
   );
