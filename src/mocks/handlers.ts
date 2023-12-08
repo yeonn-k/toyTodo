@@ -1,5 +1,4 @@
 import { http, HttpResponse } from "msw";
-import { server } from "./server";
 
 // const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
 const todos = [
@@ -61,7 +60,14 @@ export const handlers = [
     const requestContents = await request.json();
 
     const todo = requestContents?.todo;
+    console.log(todo);
 
-    todos.filter((el) => el.id != todo);
+    const compareTodoIndex = todos.findIndex((el) => el.id === todo.id);
+    console.log(compareTodoIndex);
+    if (compareTodoIndex !== -1) {
+      todos[compareTodoIndex] = todo;
+    }
+
+    return new HttpResponse(todo, { status: 201 });
   }),
 ];

@@ -81,8 +81,6 @@ const TodoBox = () => {
       });
   }, []);
 
-  console.log(todos);
-
   const postTodo = async (newTodo: {
     id: number;
     taskName: string;

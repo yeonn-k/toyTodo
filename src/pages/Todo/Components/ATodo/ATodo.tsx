@@ -19,6 +19,28 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
 
   const [checked, setChecked] = useState(false);
 
+  const [putTodos, setPutTodos] = useState<{
+    id: number;
+    taskName: string;
+    state: boolean;
+    date: string;
+    backlog: string;
+  }>();
+
+  const putState = async () => {
+    try {
+      await fetch("/todos", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({ todo: changedTodo }),
+      });
+    } catch (error) {
+      console.error("error during put state❌:", error);
+    } finally {
+    }
+  };
   const isChecked = () => {
     setChecked((prev) => !prev);
     changeState();
@@ -30,21 +52,12 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     putState();
   };
 
-  const putState = async () => {
-    try {
-      await fetch("/todos", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({ todo: todo }),
-      });
-
-      setTodos();
-    } catch (error) {
-      console.error("error during put state❌:", error);
-    } finally {
-    }
+  const changedTodo = {
+    id: id,
+    taskName: taskName,
+    state: checked,
+    date: date,
+    backlog: backlog,
   };
 
   return (
