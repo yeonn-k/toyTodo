@@ -63,7 +63,7 @@ export const handlers = [
     console.log(todo);
 
     const compareTodoIndex = todos.findIndex((el) => el.id === todo.id);
-    console.log(compareTodoIndex);
+
     if (compareTodoIndex !== -1) {
       todos[compareTodoIndex] = todo;
     }

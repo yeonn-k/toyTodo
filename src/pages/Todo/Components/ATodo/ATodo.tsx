@@ -17,7 +17,7 @@ interface TodoBoxProps {
 const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
   const { id, taskName, state, date, backlog } = todo;
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const [putTodos, setPutTodos] = useState<{
     id: number;
@@ -36,11 +36,16 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
         },
         body: JSON.stringify({ todo: changedTodo }),
       });
+
+      const response = await fetch("/todos");
+      const result = await response.json();
+
+      setTodos(result);
     } catch (error) {
       console.error("error during put state❌:", error);
-    } finally {
     }
   };
+
   const isChecked = () => {
     setChecked((prev) => !prev);
     changeState();
@@ -61,8 +66,8 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
   };
 
   return (
-    <S.ATodo style={{ textDecoration: checked ? "line-through" : "none" }}>
-      <S.CheckBox type="checkbox" checked={checked} onChange={isChecked} />
+    <S.ATodo style={{ textDecoration: checked ? "none" : "line-through" }}>
+      <S.CheckBox type="checkbox" checked={!checked} onChange={isChecked} />
       {taskName}
     </S.ATodo>
   );
