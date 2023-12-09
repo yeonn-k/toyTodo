@@ -42,7 +42,7 @@ export const handlers = [
     return new HttpResponse(responseBody, { status: 200 });
   }),
 
-  http.post<PostTodo>("/todos", async ({ request }) => {
+  http.post("/todos", async ({ request }) => {
     const requestContents = await request.json();
 
     const todo = requestContents?.todo;
@@ -56,7 +56,7 @@ export const handlers = [
     return new HttpResponse(todo, { status: 201 });
   }),
 
-  http.put<PostTodo>("/todos", async ({ request }) => {
+  http.put("/todos", async ({ request }) => {
     const requestContents = await request.json();
 
     const todo = requestContents?.todo;
@@ -69,5 +69,18 @@ export const handlers = [
     }
 
     return new HttpResponse(todo, { status: 201 });
+  }),
+
+  http.delete("/todos/:id", ({ request }) => {
+    const { id } = request.id;
+
+    console.log(id);
+
+    const afterDelete = todos.filter((el) => el.id !== todos.id);
+    console.log(afterDelete);
+
+    console.log('Deleting user with ID "%s"', id);
+
+    return new HttpResponse(afterDelete, { status: 204 });
   }),
 ];
