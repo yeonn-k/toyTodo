@@ -52,8 +52,10 @@ export const S = {
   `,
   Tasks: styled.ul`
     width: 100%;
+    height: 68%;
+    overflow: scroll;
     padding: 50px;
-    margin-top: -10px;
+    padding-top: 30px;
 
     color: #fff;
     font-size: 22px;

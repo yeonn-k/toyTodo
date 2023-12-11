@@ -19,7 +19,7 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
 
   const [checked, setChecked] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [editName, setEditName] = useState<string>();
+  const [editName, setEditName] = useState<string>(taskName);
 
   const [putTodos, setPutTodos] = useState<{
     id: number;
@@ -30,7 +30,9 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
   }>();
 
   const isEditing = () => {
-    setEditing((prev) => !prev);
+    if (checked) {
+      setEditing((prev) => !prev);
+    } else return;
   };
 
   const putState = async () => {
@@ -82,6 +84,14 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     putState();
   };
 
+  const isChanged = (editName: string) => {
+    return editName !== undefined
+      ? setEditName(editName)
+      : setEditName(taskName);
+  };
+
+  console.log(editName);
+
   const stateChangedTodo = {
     id: id,
     taskName: taskName,
@@ -115,6 +125,11 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     }
   };
 
+  const clickCheckBtn = () => {
+    isEditing();
+    putName();
+  };
+
   return (
     <S.ATodo style={{ textDecoration: checked ? "none" : "line-through" }}>
       <S.Name>
@@ -126,20 +141,17 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
             placeholder="edit your task name ❣️"
             value={editName}
             onChange={({ target: { value } }) => {
-              setEditName(value);
+              isChanged(value);
             }}
           />
         ) : (
           <span>{taskName}</span>
         )}
       </S.Name>
+
       <S.Icon>
         {editing ? (
-          <S.Check
-            onClick={() => {
-              isEditing(), putName();
-            }}
-          />
+          <S.Check onClick={clickCheckBtn} />
         ) : (
           <S.Edit onClick={isEditing} />
         )}
