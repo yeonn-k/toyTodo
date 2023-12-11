@@ -90,8 +90,6 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
       : setEditName(taskName);
   };
 
-  console.log(editName);
-
   const stateChangedTodo = {
     id: id,
     taskName: taskName,
