@@ -67,7 +67,7 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
 
       setTodos(result);
     } catch (error) {
-      console.error("error during put state❌:", error);
+      console.error("error during put name❌:", error);
     }
   };
 
@@ -119,11 +119,27 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     <S.ATodo style={{ textDecoration: checked ? "none" : "line-through" }}>
       <S.Name>
         <S.CheckBox type="checkbox" checked={!checked} onChange={isChecked} />
-        {taskName}
+        {editing ? (
+          <S.EditTaskName
+            type="text"
+            name="todo"
+            placeholder="edit your task name ❣️"
+            value={editName}
+            onChange={({ target: { value } }) => {
+              setEditName(value);
+            }}
+          />
+        ) : (
+          <span>{taskName}</span>
+        )}
       </S.Name>
       <S.Icon>
         {editing ? (
-          <S.Check onClick={isEditing} />
+          <S.Check
+            onClick={() => {
+              isEditing(), putName();
+            }}
+          />
         ) : (
           <S.Edit onClick={isEditing} />
         )}

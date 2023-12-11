@@ -7,7 +7,25 @@ export const S = {
     width: 100%;
     margin-bottom: 10px;
   `,
-  Name: styled.div``,
+  Name: styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+  `,
+  Form: styled.form`
+    width: 100%;
+  `,
+  EditTaskName: styled.input`
+    width: 86%;
+    height: 32px;
+    border-radius: 5px;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: #fff;
+
+    font-size: 20px;
+  `,
   Icon: styled.div`
     display: flex;
   `,

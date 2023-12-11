@@ -78,9 +78,10 @@ export const handlers = [
 
     const afterDelete = todos.filter((el) => el.id !== todos.id);
     console.log(afterDelete);
+    console.log(todos);
 
     console.log('Deleting user with ID "%s"', id);
 
-    return new HttpResponse(afterDelete, { status: 204 });
+    // return new HttpResponse(todos, { status: 204 });
   }),
 ];
