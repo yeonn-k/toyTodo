@@ -5,6 +5,7 @@ import { S } from "./TodoBox";
 
 const TodoBox = () => {
   const [taskName, setTaskName] = useState("");
+  const [count, setCount] = useState(0);
 
   const [todo, setTodo] = useState<{
     id: number;
@@ -81,8 +82,6 @@ const TodoBox = () => {
       });
   }, []);
 
-  console.log(todos);
-
   const postTodo = async (newTodo: {
     id: number;
     taskName: string;
@@ -121,6 +120,17 @@ const TodoBox = () => {
   };
 
   let numOfTodos = todos.filter((el) => el.state === false).length;
+
+  // useEffect(() => {
+  //   for (let i = 0; i < todos.length; i++) {
+  //     if ((todos[i].state = false)) {
+  //       setCount(count + 1);
+  //     }
+  //     if ((todos[i].state = true)) {
+  //       setCount(count - 1);
+  //     }
+  //   }
+  // }, [todos]);
 
   if (!todos) return null;
 

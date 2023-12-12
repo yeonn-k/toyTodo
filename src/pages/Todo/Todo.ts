@@ -43,6 +43,11 @@ export const S = {
     width: 100%;
     margin-bottom: 16px;
     font-size: 76px;
+
+    text-shadow: 7px 7px #0c1620;
+
+    /* text-decoration: underline; */
+    /* text-decoration-style: wavy; */
   `,
   LowerCatchPhrase: styled.div`
     width: 100%;
