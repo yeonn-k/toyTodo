@@ -60,7 +60,6 @@ export const handlers = [
     const requestContents = await request.json();
 
     const todo = requestContents?.todo;
-    console.log(todo);
 
     const compareTodoIndex = todos.findIndex((el) => el.id === todo.id);
 
@@ -73,10 +72,8 @@ export const handlers = [
 
   http.delete("/todos/:id", async ({ params }) => {
     const { id } = params;
-    console.log(id);
 
     const afterDelete = todos.filter((el) => el.id !== parseInt(id));
-    console.log(afterDelete);
 
     todos = afterDelete;
 
