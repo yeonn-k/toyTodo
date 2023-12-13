@@ -1,7 +1,8 @@
 import { http, HttpResponse } from "msw";
+import { useState } from "react";
 
 // const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
-const todos = [
+let todos = [
   {
     id: 0,
     taskName: "wake up 🛏️",
@@ -24,7 +25,6 @@ const todos = [
     backlog: "",
   },
 ];
-
 interface PostTodo {
   todo: {
     id: number;
@@ -60,7 +60,6 @@ export const handlers = [
     const requestContents = await request.json();
 
     const todo = requestContents?.todo;
-    console.log(todo);
 
     const compareTodoIndex = todos.findIndex((el) => el.id === todo.id);
 
@@ -71,17 +70,13 @@ export const handlers = [
     return new HttpResponse(todo, { status: 201 });
   }),
 
-  http.delete("/todos/:id", ({ request }) => {
-    const { id } = request.id;
+  http.delete("/todos/:id", async ({ params }) => {
+    const { id } = params;
 
-    console.log(id);
+    const afterDelete = todos.filter((el) => el.id !== parseInt(id));
 
-    const afterDelete = todos.filter((el) => el.id !== todos.id);
-    console.log(afterDelete);
-    console.log(todos);
+    todos = afterDelete;
 
-    console.log('Deleting user with ID "%s"', id);
-
-    // return new HttpResponse(todos, { status: 204 });
+    return new HttpResponse(id, { status: 201 });
   }),
 ];
