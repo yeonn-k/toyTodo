@@ -35,6 +35,28 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     } else return;
   };
 
+  const isChanged = (editName: string) => {
+    return editName !== undefined
+      ? setEditName(editName)
+      : setEditName(taskName);
+  };
+
+  const stateChangedTodo = {
+    id: id,
+    taskName: taskName,
+    state: checked,
+    date: date,
+    backlog: backlog,
+  };
+
+  const nameChangedTodo = {
+    id: id,
+    taskName: editName,
+    state: state,
+    date: date,
+    backlog: backlog,
+  };
+
   const putState = async () => {
     try {
       await fetch("/todos", {
@@ -84,31 +106,9 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     putState();
   };
 
-  const isChanged = (editName: string) => {
-    return editName !== undefined
-      ? setEditName(editName)
-      : setEditName(taskName);
-  };
-
-  const stateChangedTodo = {
-    id: id,
-    taskName: taskName,
-    state: checked,
-    date: date,
-    backlog: backlog,
-  };
-
-  const nameChangedTodo = {
-    id: id,
-    taskName: editName,
-    state: state,
-    date: date,
-    backlog: backlog,
-  };
-
   const deleteTodo = async () => {
     try {
-      fetch(`/todos/${id}`, {
+      await fetch(`/todos/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
@@ -118,6 +118,8 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
 
       const response = await fetch("/todos");
       const result = await response.json();
+
+      setTodos(result);
     } catch (error) {
       console.error("error during delete state❌:", error);
     }
