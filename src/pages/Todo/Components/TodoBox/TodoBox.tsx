@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
 
 const TodoBox = () => {
+  const ref = useRef<number>(2);
+
   const [taskName, setTaskName] = useState("");
   const [count, setCount] = useState(0);
 
@@ -26,8 +28,6 @@ const TodoBox = () => {
   >([]);
 
   const [loading, setLoading] = useState<boolean>(false);
-
-  let ref = 3;
 
   let dateForm = "";
 
@@ -58,10 +58,10 @@ const TodoBox = () => {
   const createTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    ref++;
+    ref.current += 1;
 
     const newTodo = {
-      id: ref,
+      id: ref.current,
       taskName: taskName,
       state: false,
       date: dateForm,
@@ -105,7 +105,7 @@ const TodoBox = () => {
 
       setTodos(result);
       setTodo({
-        id: ref,
+        id: ref.current,
         taskName: "",
         state: false,
         date: "",
