@@ -87,6 +87,10 @@ export const S = {
     height: 58%;
     border-radius: 40px;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     background-color: rgba(0, 0, 0, 0.5);
   `,
   RightBox: styled.div`

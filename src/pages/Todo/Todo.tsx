@@ -1,8 +1,8 @@
 import React from "react";
 
 import Weather from "./Components/Weather/Weather.tsx";
-import Calander from "./Components/Calendar/Calendar.tsx";
 import TodoBox from "./Components/TodoBox/TodoBox.tsx";
+import CalendarWrap from "./Components/CalendarWrap/CalendarWrap.tsx";
 
 import { S } from "./Todo";
 
@@ -21,7 +21,7 @@ const Todo = () => {
                 <Weather />
               </S.WheaterBox>
               <S.CalendarBox>
-                <Calander />
+                <CalendarWrap />
               </S.CalendarBox>
             </S.LeftBox>
             <S.RightBox>
