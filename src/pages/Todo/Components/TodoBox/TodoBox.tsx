@@ -87,6 +87,29 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       });
   }, []);
 
+  // useEffect(() => {
+  //   fetch(`/todos/${searchDate}`)
+  //     .then((response) => response.json())
+  //     .then((result) => setTodos(result));
+  // }, [searchDate]);
+
+  const getTodosOfDate = async () => {
+    try {
+      await fetch(`/todos/${searchDate}`);
+
+      const response = await fetch("/todos");
+      const result = await response.json();
+
+      setTodos(result);
+    } catch (error) {
+      console.error("error during get specific todo❌ ", error);
+    }
+  };
+
+  useEffect(() => {
+    getTodosOfDate();
+  }, [searchDate]);
+
   const postTodo = async (newTodo: {
     id: number;
     taskName: string;

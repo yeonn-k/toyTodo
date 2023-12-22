@@ -38,6 +38,7 @@ const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
     const formattedDate = dateFormat(date);
     searchParams.set("date", formattedDate);
     setSearchParams(searchParams);
+    setSearchDate(formattedDate);
   };
 
   const getTodosByDate = async () => {
@@ -60,8 +61,6 @@ const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
         calendarType="hebrew"
         onClickDay={(value) => {
           handleUserDate(value);
-
-          console.log(value);
         }}
         value={date}
       />
