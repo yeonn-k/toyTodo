@@ -4,7 +4,12 @@ import Calendar from "react-calendar";
 import { S } from "./CalendarWrap";
 import "./Calendar.css";
 
-const CalendarWrap = () => {
+interface TodoProps {
+  searchDate: string;
+  setSearchDate: (value: string) => void;
+}
+
+const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
   const [date, setDate] = useState();
 
   const dateFormat = (userDate: Date) => {

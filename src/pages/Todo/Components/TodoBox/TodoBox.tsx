@@ -3,7 +3,12 @@ import React, { useEffect, useState, useRef } from "react";
 import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
 
-const TodoBox = () => {
+interface TodoProps {
+  searchDate: string;
+  setSearchDate: (value: string) => void;
+}
+
+const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
   const ref = useRef<number>(2);
 
   const [taskName, setTaskName] = useState("");

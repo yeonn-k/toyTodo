@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Weather from "./Components/Weather/Weather.tsx";
 import TodoBox from "./Components/TodoBox/TodoBox.tsx";
@@ -7,6 +7,7 @@ import CalendarWrap from "./Components/CalendarWrap/CalendarWrap.tsx";
 import { S } from "./Todo";
 
 const Todo = () => {
+  const [searchDate, setSearchDate] = useState<string>("");
   return (
     <S.Todo>
       <S.BgImg>
@@ -21,11 +22,14 @@ const Todo = () => {
                 <Weather />
               </S.WheaterBox>
               <S.CalendarBox>
-                <CalendarWrap />
+                <CalendarWrap
+                  searchDate={searchDate}
+                  setSearchDate={setSearchDate}
+                />
               </S.CalendarBox>
             </S.LeftBox>
             <S.RightBox>
-              <TodoBox />
+              <TodoBox searchDate={searchDate} setSearchDate={setSearchDate} />
             </S.RightBox>
           </S.ExceptCatchPhrase>
         </S.Brightness>
