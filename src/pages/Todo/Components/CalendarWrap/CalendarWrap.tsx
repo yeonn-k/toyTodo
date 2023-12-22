@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import Calendar from "react-calendar";
 import { S } from "./CalendarWrap";
@@ -10,7 +11,20 @@ interface TodoProps {
 }
 
 const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
+  const location = useLocation();
+
   const [date, setDate] = useState();
+  const [formattedDate, setFormattedDate] = useState("");
+  const [todoOfDate, setTodoOfDate] = useState<
+    Array<{
+      id: number;
+      taskName: string;
+      state: boolean;
+      date: string;
+      backlog: string;
+    }>
+  >([]);
+  const [searchParams, setSearchParams] = useSearchParams([]);
 
   const dateFormat = (userDate: Date) => {
     const year = userDate.getFullYear();
@@ -22,8 +36,20 @@ const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
 
   const handleUserDate = (date: Date) => {
     const formattedDate = dateFormat(date);
+    searchParams.set("date", formattedDate);
+    setSearchParams(searchParams);
+  };
 
-    console.log("formatted: ", formattedDate);
+  const getTodosByDate = async () => {
+    //   try{
+    //     await fetch("/todos")
+    //   .then((response) => response.json())
+    //   .then((result) => setTodoOfDate(result));
+    // for (let i = 0; i < todoOfDate.length; i++) {
+    //   if (todoOfDate && Object.values(todoOfDate[i]).includes(formattedDate)) {
+    //     setTodos(todoOfDate);
+    //   }
+    // }}
   };
 
   return (
