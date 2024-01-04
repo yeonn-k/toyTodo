@@ -90,6 +90,8 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
     setTodo(newTodo);
 
     postTodo(newTodo);
+
+    console.log(newTodo);
   };
 
   const getTodos = () => {

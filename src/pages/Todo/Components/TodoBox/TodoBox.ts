@@ -38,7 +38,7 @@ export const S = {
   ShowAll: styled.div`
     width: 100%;
     font-size: 20px;
-    font-family: ${(props) => props.theme.titleFont};
+    /* font-family: ${(props) => props.theme.titleFont}; */
     text-align: center;
     color: #fff;
     font-weight: 100;
