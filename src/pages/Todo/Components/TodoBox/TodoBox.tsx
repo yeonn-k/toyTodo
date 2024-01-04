@@ -186,6 +186,8 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
         <S.NumOfTask>
           Number of Tasks <S.Num>{numOfTodos}</S.Num>
         </S.NumOfTask>
+        <S.ShowAll>Show All Tasks</S.ShowAll>
+
         <S.MemoBox>
           {/* <S.MemoTitle>Memo for Today? </S.MemoTitle> */}
         </S.MemoBox>

@@ -26,7 +26,7 @@ export const S = {
 
     .react-calendar__navigation__label__labelText {
       font-size: 20px;
-      font-family: Agbalumo;
+      font-family: ${(props) => props.theme.titleFont};
       color: #fff;
     }
 
@@ -74,12 +74,21 @@ export const S = {
   Title: styled.div`
     width: 100%;
     font-size: 30px;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     color: #fff;
     margin-bottom: 32px;
 
     text-decoration: underline;
     text-underline-offset: 10px;
+  `,
+
+  ShowAll: styled.div`
+    width: 100%;
+    font-size: 20px;
+    font-family: ${(props) => props.theme.titleFont};
+    text-align: center;
+    color: #fff;
+    margin-bottom: 14px;
   `,
 };

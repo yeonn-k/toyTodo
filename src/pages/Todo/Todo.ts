@@ -37,7 +37,7 @@ export const S = {
 
     color: #fff;
     text-align: center;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
   `,
   UpperCatchPhrase: styled.div`
     width: 100%;

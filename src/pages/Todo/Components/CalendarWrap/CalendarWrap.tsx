@@ -56,6 +56,8 @@ const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
   return (
     <S.CalendarWrap>
       <S.Title> Calendar ? </S.Title>
+      {/* <S.ShowAll>Show All Tasks</S.ShowAll> */}
+
       <Calendar
         locale="en"
         calendarType="hebrew"
