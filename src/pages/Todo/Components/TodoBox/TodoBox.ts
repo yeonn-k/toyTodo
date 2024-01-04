@@ -27,20 +27,27 @@ export const S = {
     font-size: 26px;
     line-height: 26px;
     color: #fff;
+
+    margin-bottom: 10px;
   `,
   Num: styled.span`
     margin-left: 14px;
     font-size: 40px;
     color: ${(props) => props.theme.blueViolet};
   `,
-
   ShowAll: styled.div`
     width: 100%;
     font-size: 20px;
     font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     color: #fff;
+    font-weight: 100;
+
     margin-bottom: 14px;
+
+    &:hover {
+      cursor: pointer;
+    }
   `,
   MemoBox: styled.div`
     width: 100%;

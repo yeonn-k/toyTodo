@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
@@ -10,6 +11,9 @@ interface TodoProps {
 
 const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
   const ref = useRef<number>(2);
+
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams([]);
 
   const [taskName, setTaskName] = useState("");
   const [count, setCount] = useState(0);
@@ -88,13 +92,24 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
     postTodo(newTodo);
   };
 
-  useEffect(() => {
+  const getTodos = () => {
     fetch("/todos")
       .then((response) => response.json())
       .then((result) => {
         setTodos(result);
         setLoading(false);
       });
+  };
+
+  const showAllTodos = () => {
+    setSearchDate("");
+    setSearchParams("");
+
+    getTodos();
+  };
+
+  useEffect(() => {
+    getTodos();
   }, []);
 
   // const getTodosOfDate = async () => {
@@ -118,7 +133,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       const result = await response.json();
 
       setSpecificTodos(result);
-      console.log("specific:", specificTodos);
     } catch (error) {
       console.error("error during get specific todo❌ ", error);
     }
@@ -186,7 +200,7 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
         <S.NumOfTask>
           Number of Tasks <S.Num>{numOfTodos}</S.Num>
         </S.NumOfTask>
-        <S.ShowAll>Show All Tasks</S.ShowAll>
+        <S.ShowAll onClick={showAllTodos}>Show All Tasks</S.ShowAll>
 
         <S.MemoBox>
           {/* <S.MemoTitle>Memo for Today? </S.MemoTitle> */}
