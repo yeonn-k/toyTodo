@@ -32,6 +32,16 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
     }>
   >([]);
 
+  const [specificTodos, setSpecificTodos] = useState<
+    Array<{
+      id: number;
+      taskName: string;
+      state: boolean;
+      date: string;
+      backlog: string;
+    }>
+  >([]);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   let dateForm = "";
@@ -87,20 +97,28 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   fetch(`/todos/${searchDate}`)
-  //     .then((response) => response.json())
-  //     .then((result) => setTodos(result));
-  // }, [searchDate]);
+  // const getTodosOfDate = async () => {
+  //   try {
+  //     await fetch(`/todos?date=${searchDate}`);
+
+  //     const response = await fetch("/todos");
+  //     const result = await response.json();
+
+  //     setTodos(result);
+  //   } catch (error) {
+  //     console.error("error during get specific todo❌ ", error);
+  //   }
+  // };
 
   const getTodosOfDate = async () => {
     try {
       await fetch(`/todos/${searchDate}`);
 
-      const response = await fetch("/todos");
+      const response = await fetch(`/todos/${searchDate}`);
       const result = await response.json();
 
-      setTodos(result);
+      setSpecificTodos(result);
+      console.log("specific:", specificTodos);
     } catch (error) {
       console.error("error during get specific todo❌ ", error);
     }
@@ -174,16 +192,27 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       </S.UpperBox>
       <S.Line />
       <S.Tasks>
-        {todos.map((todo) => {
-          return (
-            <ATodo
-              key={todo.id}
-              todo={todo}
-              setTodo={setTodo}
-              setTodos={setTodos}
-            />
-          );
-        })}
+        {searchDate
+          ? specificTodos.map((todo) => {
+              return (
+                <ATodo
+                  key={todo.id}
+                  todo={todo}
+                  setTodo={setTodo}
+                  setTodos={setTodos}
+                />
+              );
+            })
+          : todos.map((todo) => {
+              return (
+                <ATodo
+                  key={todo.id}
+                  todo={todo}
+                  setTodo={setTodo}
+                  setTodos={setTodos}
+                />
+              );
+            })}
       </S.Tasks>
 
       <S.Form onSubmit={createTodo}>
