@@ -60,13 +60,9 @@ export const handlers = [
   http.get("/todos/:searchDate", async ({ params }) => {
     const { searchDate } = params;
 
-    console.log(searchDate);
-
     if (todos && searchDate) {
       specificDateTodos = todos.filter((todo) => todo.date === searchDate);
     }
-
-    console.log("handlers: ", specificDateTodos);
 
     // 새로고침 후 검색 시 렌더링 제대로 되나, todos 자체를 날려 버리므로, 다른 날짜 데이터 재검색 불가
 
