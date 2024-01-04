@@ -32,14 +32,14 @@ export const S = {
   Logo: styled.div`
     width: 100%;
     margin-bottom: 15px;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont}
     text-align: center;
     font-size: 76px;
     color: #fff;
   `,
   MainCatchPhrase: styled.div`
     width: 100%;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     font-weight: 200;
     text-align: center;
     font-size: 22px;

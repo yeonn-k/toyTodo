@@ -10,7 +10,7 @@ export const S = {
 
     width: 100%;
     color: #fff;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     font-size: 22px;
     margin-bottom: 14px;
@@ -20,7 +20,7 @@ export const S = {
 
     width: 100%;
     color: #fff;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     font-size: 22px;
   `,

@@ -16,7 +16,7 @@ export const S = {
     margin-bottom: 20px;
 
     text-align: center;
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     font-size: 30px;
   `,
   WeatherIcon: styled.div<{ icon: string }>`

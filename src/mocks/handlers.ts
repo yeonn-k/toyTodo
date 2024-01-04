@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 // const todos = ["wake up 🛏️", "do tasks 🖍️", "have meals 🥯"];
 let todos = [
@@ -24,15 +25,29 @@ let todos = [
     date: "20231201",
     backlog: "",
   },
+  {
+    id: 3,
+    taskName: `hello! I'm task of december 23❄️`,
+    state: false,
+    date: "20231223",
+    backlog: "",
+  },
 ];
+
+let specificDateTodos: Array<{
+  id: number;
+  taskName: string;
+  state: boolean;
+  date: string;
+  backlog: string;
+}> = [];
+
 interface PostTodo {
-  todo: {
-    id: number;
-    taskName: string;
-    state: boolean;
-    date: string;
-    backlog: string;
-  };
+  id: number;
+  taskName: string;
+  state: boolean;
+  date: string;
+  backlog: string;
 }
 
 export const handlers = [
@@ -40,6 +55,18 @@ export const handlers = [
     const responseBody = JSON.stringify(todos);
 
     return new HttpResponse(responseBody, { status: 200 });
+  }),
+
+  http.get("/todos/:searchDate", async ({ params }) => {
+    const { searchDate } = params;
+
+    if (todos && searchDate) {
+      specificDateTodos = todos.filter((todo) => todo.date === searchDate);
+    }
+
+    // 새로고침 후 검색 시 렌더링 제대로 되나, todos 자체를 날려 버리므로, 다른 날짜 데이터 재검색 불가
+
+    return new HttpResponse(JSON.stringify(specificDateTodos), { status: 200 });
   }),
 
   http.post("/todos", async ({ request }) => {

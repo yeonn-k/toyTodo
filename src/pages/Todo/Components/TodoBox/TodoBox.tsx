@@ -1,10 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import ATodo from "../ATodo/ATodo.tsx";
 import { S } from "./TodoBox";
 
-const TodoBox = () => {
+interface TodoProps {
+  searchDate: string;
+  setSearchDate: (value: string) => void;
+}
+
+const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
   const ref = useRef<number>(2);
+
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams([]);
 
   const [taskName, setTaskName] = useState("");
   const [count, setCount] = useState(0);
@@ -18,6 +27,16 @@ const TodoBox = () => {
   }>();
 
   const [todos, setTodos] = useState<
+    Array<{
+      id: number;
+      taskName: string;
+      state: boolean;
+      date: string;
+      backlog: string;
+    }>
+  >([]);
+
+  const [specificTodos, setSpecificTodos] = useState<
     Array<{
       id: number;
       taskName: string;
@@ -73,14 +92,55 @@ const TodoBox = () => {
     postTodo(newTodo);
   };
 
-  useEffect(() => {
+  const getTodos = () => {
     fetch("/todos")
       .then((response) => response.json())
       .then((result) => {
         setTodos(result);
         setLoading(false);
       });
+  };
+
+  const showAllTodos = () => {
+    setSearchDate("");
+    setSearchParams("");
+
+    getTodos();
+  };
+
+  useEffect(() => {
+    getTodos();
   }, []);
+
+  // const getTodosOfDate = async () => {
+  //   try {
+  //     await fetch(`/todos?date=${searchDate}`);
+
+  //     const response = await fetch("/todos");
+  //     const result = await response.json();
+
+  //     setTodos(result);
+  //   } catch (error) {
+  //     console.error("error during get specific todo❌ ", error);
+  //   }
+  // };
+
+  const getTodosOfDate = async () => {
+    try {
+      await fetch(`/todos/${searchDate}`);
+
+      const response = await fetch(`/todos/${searchDate}`);
+      const result = await response.json();
+
+      setSpecificTodos(result);
+    } catch (error) {
+      console.error("error during get specific todo❌ ", error);
+    }
+  };
+
+  useEffect(() => {
+    getTodosOfDate();
+  }, [searchDate]);
 
   const postTodo = async (newTodo: {
     id: number;
@@ -140,22 +200,35 @@ const TodoBox = () => {
         <S.NumOfTask>
           Number of Tasks <S.Num>{numOfTodos}</S.Num>
         </S.NumOfTask>
+        <S.ShowAll onClick={showAllTodos}>Show All Tasks</S.ShowAll>
+
         <S.MemoBox>
           {/* <S.MemoTitle>Memo for Today? </S.MemoTitle> */}
         </S.MemoBox>
       </S.UpperBox>
       <S.Line />
       <S.Tasks>
-        {todos.map((todo) => {
-          return (
-            <ATodo
-              key={todo.id}
-              todo={todo}
-              setTodo={setTodo}
-              setTodos={setTodos}
-            />
-          );
-        })}
+        {searchDate
+          ? specificTodos.map((todo) => {
+              return (
+                <ATodo
+                  key={todo.id}
+                  todo={todo}
+                  setTodo={setTodo}
+                  setTodos={setTodos}
+                />
+              );
+            })
+          : todos.map((todo) => {
+              return (
+                <ATodo
+                  key={todo.id}
+                  todo={todo}
+                  setTodo={setTodo}
+                  setTodos={setTodos}
+                />
+              );
+            })}
       </S.Tasks>
 
       <S.Form onSubmit={createTodo}>

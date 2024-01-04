@@ -26,7 +26,7 @@ export const S = {
     border-radius: 5px;
     border: 3px solid #fff;
 
-    font-family: Agbalumo;
+    font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     line-height: 20px;
     color: #fff;
