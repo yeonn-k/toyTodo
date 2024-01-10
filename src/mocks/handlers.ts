@@ -9,28 +9,18 @@ let todos = [
     taskName: "wake up 🛏️",
     state: false,
     date: "20231201",
-    backlog: "",
   },
   {
     id: 1,
     taskName: "do tasks 🖍️",
     state: false,
     date: "20231201",
-    backlog: "",
   },
   {
     id: 2,
     taskName: "have meals 🥯",
     state: false,
     date: "20231201",
-    backlog: "",
-  },
-  {
-    id: 3,
-    taskName: `hello! I'm task of december 23❄️`,
-    state: false,
-    date: "20231223",
-    backlog: "",
   },
 ];
 
@@ -39,7 +29,6 @@ let specificDateTodos: Array<{
   taskName: string;
   state: boolean;
   date: string;
-  backlog: string;
 }> = [];
 
 interface PostTodo {
@@ -47,7 +36,6 @@ interface PostTodo {
   taskName: string;
   state: boolean;
   date: string;
-  backlog: string;
 }
 
 export const handlers = [

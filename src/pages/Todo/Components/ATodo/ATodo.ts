@@ -59,8 +59,8 @@ export const S = {
     cursor: pointer;
   `,
   Delete: styled.div`
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 
     background: url("/images/icon/deleteWhite.png") no-repeat;
     background-size: cover;

@@ -32,7 +32,7 @@ export const S = {
   Logo: styled.div`
     width: 100%;
     margin-bottom: 15px;
-    font-family: ${(props) => props.theme.titleFont}
+    font-family: ${(props) => props.theme.titleFont};
     text-align: center;
     font-size: 76px;
     color: #fff;
