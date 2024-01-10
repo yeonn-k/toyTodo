@@ -67,7 +67,7 @@ export const S = {
     height: 72%;
     margin-right: 60px;
   `,
-  WheaterBox: styled.div`
+  WeatherBox: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;

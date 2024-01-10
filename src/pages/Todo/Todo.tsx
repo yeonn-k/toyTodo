@@ -19,9 +19,9 @@ const Todo = () => {
           </S.CatchPhraseBox>
           <S.ExceptCatchPhrase>
             <S.LeftBox>
-              <S.WheaterBox>
+              <S.WeatherBox>
                 <Weather />
-              </S.WheaterBox>
+              </S.WeatherBox>
               <S.CalendarBox>
                 <CalendarWrap
                   searchDate={searchDate}
