@@ -21,7 +21,6 @@ const CalendarWrap = ({ searchDate, setSearchDate }: TodoProps) => {
       taskName: string;
       state: boolean;
       date: string;
-      backlog: string;
     }>
   >([]);
   const [searchParams, setSearchParams] = useSearchParams([]);

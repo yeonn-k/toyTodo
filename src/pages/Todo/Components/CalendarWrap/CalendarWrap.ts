@@ -59,6 +59,7 @@ export const S = {
     .react-calendar__tile {
       width: 14%;
       height: 32px;
+      color: #fff;
     }
 
     .react-calendar__tile--active:enabled:hover,

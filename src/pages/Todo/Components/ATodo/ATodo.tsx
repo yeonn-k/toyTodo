@@ -8,14 +8,13 @@ interface TodoBoxProps {
     taskName: string;
     state: boolean;
     date: string;
-    backlog: string;
   };
-  setTodo: (value: {}) => void;
+
   setTodos: (value: []) => void;
 }
 
-const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
-  const { id, taskName, state, date, backlog } = todo;
+const ATodo = ({ todo, setTodos }: TodoBoxProps) => {
+  const { id, taskName, state, date } = todo;
 
   const [checked, setChecked] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -26,7 +25,6 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     taskName: string;
     state: boolean;
     date: string;
-    backlog: string;
   }>();
 
   const isEditing = () => {
@@ -46,7 +44,6 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     taskName: taskName,
     state: checked,
     date: date,
-    backlog: backlog,
   };
 
   const nameChangedTodo = {
@@ -54,7 +51,6 @@ const ATodo = ({ todo, setTodo, setTodos }: TodoBoxProps) => {
     taskName: editName,
     state: state,
     date: date,
-    backlog: backlog,
   };
 
   const putState = async () => {

@@ -23,7 +23,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
     taskName: string;
     state: boolean;
     date: string;
-    backlog: string;
   }>();
 
   const [todos, setTodos] = useState<
@@ -32,7 +31,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       taskName: string;
       state: boolean;
       date: string;
-      backlog: string;
     }>
   >([]);
 
@@ -42,7 +40,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       taskName: string;
       state: boolean;
       date: string;
-      backlog: string;
     }>
   >([]);
 
@@ -51,29 +48,32 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
   let dateForm = "";
 
   const createDate = () => {
-    const today = new Date();
+    if (searchDate) {
+      dateForm = searchDate;
+    } else {
+      const today = new Date();
 
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      const date = today.getDate();
 
-    const makeMonthForm = (month: number) => {
-      if (month < 10) {
-        return "0" + month;
-      }
-      return month;
-    };
-    const makeDateForm = (date: number) => {
-      if (date < 10) {
-        return "0" + date;
-      }
-      return date;
-    };
+      const makeMonthForm = (month: number) => {
+        if (month < 10) {
+          return "0" + month;
+        }
+        return month;
+      };
+      const makeDateForm = (date: number) => {
+        if (date < 10) {
+          return "0" + date;
+        }
+        return date;
+      };
 
-    dateForm = `${year}${makeMonthForm(month)}${makeDateForm(date)}`;
+      dateForm = `${year}${makeMonthForm(month)}${makeDateForm(date)}`;
+    }
   };
 
-  console.log(dateForm);
   createDate();
 
   const createTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +86,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       taskName: taskName,
       state: false,
       date: dateForm,
-      backlog: "",
     };
 
     setTodo(newTodo);
@@ -99,6 +98,11 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       .then((response) => response.json())
       .then((result) => {
         setTodos(result);
+        const sortedTodos = [...todos].sort(
+          (a, b) => parseInt(a.date) - parseInt(b.date)
+        );
+        setTodos(sortedTodos);
+
         setLoading(false);
       });
   };
@@ -106,26 +110,18 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
   const showAllTodos = () => {
     setSearchDate("");
     setSearchParams("");
-
     getTodos();
   };
 
   useEffect(() => {
-    getTodos();
+    fetch("/todos")
+      .then((response) => response.json())
+      .then((result) => {
+        setTodos(result);
+
+        setLoading(false);
+      });
   }, []);
-
-  // const getTodosOfDate = async () => {
-  //   try {
-  //     await fetch(`/todos?date=${searchDate}`);
-
-  //     const response = await fetch("/todos");
-  //     const result = await response.json();
-
-  //     setTodos(result);
-  //   } catch (error) {
-  //     console.error("error during get specific todo❌ ", error);
-  //   }
-  // };
 
   const getTodosOfDate = async () => {
     try {
@@ -140,16 +136,17 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
     }
   };
 
+  let numOfTodos = todos.filter((el) => el.state === false).length;
+
   useEffect(() => {
     getTodosOfDate();
-  }, [searchDate]);
+  }, [numOfTodos, searchDate]);
 
   const postTodo = async (newTodo: {
     id: number;
     taskName: string;
     state: boolean;
     date: string;
-    backlog: string;
   }) => {
     setLoading(true);
 
@@ -171,7 +168,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
         taskName: "",
         state: false,
         date: "",
-        backlog: "",
       });
       setTaskName("");
     } catch (error) {
@@ -180,8 +176,6 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       setLoading(false);
     }
   };
-
-  let numOfTodos = todos.filter((el) => el.state === false).length;
 
   // useEffect(() => {
   //   for (let i = 0; i < todos.length; i++) {
@@ -212,24 +206,10 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       <S.Tasks>
         {searchDate
           ? specificTodos.map((todo) => {
-              return (
-                <ATodo
-                  key={todo.id}
-                  todo={todo}
-                  setTodo={setTodo}
-                  setTodos={setTodos}
-                />
-              );
+              return <ATodo key={todo.id} todo={todo} setTodos={setTodos} />;
             })
           : todos.map((todo) => {
-              return (
-                <ATodo
-                  key={todo.id}
-                  todo={todo}
-                  setTodo={setTodo}
-                  setTodos={setTodos}
-                />
-              );
+              return <ATodo key={todo.id} todo={todo} setTodos={setTodos} />;
             })}
       </S.Tasks>
 
