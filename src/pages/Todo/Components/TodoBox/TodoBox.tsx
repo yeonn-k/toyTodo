@@ -67,11 +67,13 @@ const TodoBox = ({ searchDate, setSearchDate }: TodoProps) => {
       if (date < 10) {
         return "0" + date;
       }
+      return date;
     };
 
     dateForm = `${year}${makeMonthForm(month)}${makeDateForm(date)}`;
   };
 
+  console.log(dateForm);
   createDate();
 
   const createTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
