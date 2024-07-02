@@ -32,6 +32,9 @@
 
 #### 📍 MSW 활용
   - MSW를 활용하여 백엔드 없이 실제 통신이 되는 것 처럼 구현
+#### 📍 Sign In / Sign Up
+  - DummyJSON( https://dummyjson.com/ )
+
 
 ## 📚 기술 스택
 |TypeScript|React|Styled-Components|MSW
