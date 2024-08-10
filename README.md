@@ -39,4 +39,4 @@
 ## 📚 기술 스택
 |TypeScript|React|Styled-Components|MSW
 |:---:|:---:|:---:|:---:|
-| <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://www.styled-components.com/atom.png" width="65" height="65" /> | <img src="https://logowik.com/content/uploads/images/msw-mock-service-worker8666.logowik.com.webp" /> </div> |
+| <img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /> | <img src="https://www.styled-components.com/atom.png" width="65" height="65" /> | <img src="https://logowik.com/content/uploads/images/msw-mock-service-worker8666.logowik.com.webp" width="65" height="65"/> </div> |
